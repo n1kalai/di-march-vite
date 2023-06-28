@@ -1,5 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
-import { getCocktails, useCocktails } from "../service/getCocktails";
+import { useCocktails } from "../service/getCocktails";
 
 export const Cocktails = () => {
 	const { isError, isLoading, data } = useCocktails();

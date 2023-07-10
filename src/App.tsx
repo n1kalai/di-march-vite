@@ -1,23 +1,31 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import { Cocktails } from "./pages/Cocktails";
+
 import "./App.css";
-import { SliderPage } from "./pages/Slider";
-import { SingleCocktailPage } from "./pages/SingleCocktail";
+
+import { protectedRoutes, routes } from "./routes/api";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
+import { Header } from "./components/common/Header";
+import { LoginModal } from "./components/common/LoginModal";
 
 function App() {
 	return (
 		<BrowserRouter>
-			<header>
-				<Link to="/about">About</Link>
-			</header>
+			<Header />
+			<LoginModal />
 			<Routes>
-				<Route path="/" element={<Cocktails />} />
-				<Route path="/cocktails" element={<Cocktails />} />
-				<Route path="/cocktails/:id" element={<SingleCocktailPage />} />
-				<Route path="/counter" element={<div>Counter: 0</div>} />
-				<Route path="/swiper" element={<SliderPage />} />
+				{routes.map(({ path, Element }) => (
+					<Route key={path} path={path} element={<Element />} />
+				))}
+
+				<Route element={<ProtectedRoute />}>
+					{protectedRoutes.map(({ path, Element }) => (
+						<Route key={path} path={path} element={<Element />} />
+					))}
+				</Route>
+
 				<Route path="*" element={<div>Not Found</div>} />
 			</Routes>
+			<footer></footer>
 		</BrowserRouter>
 	);
 }

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getCocktails, useCocktails } from "../service/getCocktails";
 import { RootState } from "../store/store";
-import { useEffect } from "react";
+import { useEffect, useTransition, startTransition } from "react";
 import { addCocktails } from "../features/cocktailsSlice";
 import { Cocktail } from "../types/cocktail";
 import { CocktailsCard } from "../components/cocktails/Card";

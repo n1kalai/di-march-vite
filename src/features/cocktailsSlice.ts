@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Cocktail } from "../types/cocktail";
 
-const initialState = {
+interface CocktailsState {
+	data: Cocktail[];
+	isLoading: boolean;
+	isError: boolean;
+}
+
+const initialState: CocktailsState = {
 	data: [],
 	isLoading: true,
 	isError: false,
@@ -16,16 +22,8 @@ const cocktailsSlice = createSlice({
 			state.isLoading = false;
 			state.isError = false;
 		},
-
-		findById: (state, action: { payload?: string; type: string }) => {
-			const cocktail = state.data.find(
-				(cocktail: Cocktail) => cocktail.idDrink === action.payload
-			);
-
-			return cocktail;
-		},
 	},
 });
 
-export const { addCocktails, findById } = cocktailsSlice.actions;
+export const { addCocktails } = cocktailsSlice.actions;
 export default cocktailsSlice.reducer;

@@ -1,10 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { addCocktails, findById } from "../features/cocktailsSlice";
-import { RootState } from "../store/store";
-import { Cocktail } from "../types/cocktail";
-import { useEffect } from "react";
+import { Link, useParams, useLocation } from "react-router-dom";
+import { addCocktails } from "../features/cocktailsSlice";
+
+import {
+	MutableRefObject,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+	useTransition,
+} from "react";
 import { getCocktails } from "../service/getCocktails";
+
+import { useAppDispatch, useAppSelector } from "../types/hooks";
 
 // we should check if there is cocktail with [id] in state,
 // if not we should fetch
@@ -13,12 +21,40 @@ import { getCocktails } from "../service/getCocktails";
 
 export const SingleCocktailPage = () => {
 	const { id } = useParams();
-	const dispatch = useDispatch();
-	const cocktail: Cocktail | undefined = useSelector((state: RootState) =>
-		state.cocktails.data.find((cock: Cocktail) => cock.idDrink === id)
+	const { search } = useLocation();
+
+	console.log(useLocation());
+	const [startTransition, isTransitioning] = useTransition();
+	const myRef = useRef(5);
+	const myElementRef: MutableRefObject<null | HTMLParagraphElement> =
+		useRef(null);
+	const [number, setNumber] = useState(0);
+
+	const url = new URLSearchParams(search);
+
+	const showPic = url.get("showPic"); // 'true'
+	const showDescription = url.get("showDescription"); // 'false'
+
+	const dispatch = useAppDispatch();
+	const cocktail = useAppSelector((state) =>
+		state.cocktails.data.find((cock) => cock.idDrink === id)
 	);
 
-	console.log(cocktail);
+	const math = Math.random(); // 23.1231231
+
+	const useMemoValue = useMemo(() => {
+		const newTitle = cocktail?.strInstructions.includes("h")
+			? "123456" + cocktail?.strDrink
+			: cocktail?.strDrink;
+
+		console.log("is in memo", cocktail);
+		return { name: cocktail?.strDrink, alternativeName: newTitle };
+	}, [cocktail]);
+
+	const useCallbackValue = useCallback((name: string) => {
+		myRef.current++;
+		console.log("inner math", math, name);
+	}, []);
 
 	useEffect(() => {
 		if (!cocktail) {
@@ -28,13 +64,37 @@ export const SingleCocktailPage = () => {
 		}
 	}, []);
 
+	// const myRefFunction = (node: HTMLElement) => {
+	// 	console.log(node.innerText);
+	// };
+
 	if (!cocktail) {
 		return <h1>No data</h1>;
 	}
 
 	return (
 		<div>
-			<h1>{cocktail.strDrink}</h1>
+			<h1
+				className={`font-bold md:mx-64 my-[12px] text-[40px] ${
+					myElementRef.current ? "text-blue-250" : "text-pink"
+				}`}
+			>
+				{useMemoValue.name} - {useMemoValue.alternativeName}
+			</h1>
+			<h2 className="text-[40px]">{number}</h2>
+
+			<button
+				className="bg-blue-450 text-[55px] px-8"
+				onClick={() => useCallbackValue("gela")}
+			>
+				show log
+			</button>
+			<button onClick={() => setNumber((p) => p + 1)}>+1</button>
+			{showPic === "true" && <img src={cocktail.strDrinkThumb} />}
+			<br />
+			{showDescription === "true" && (
+				<p ref={myElementRef}>{cocktail.strInstructions} </p>
+			)}
 			<Link to="/">home</Link>
 		</div>
 	);

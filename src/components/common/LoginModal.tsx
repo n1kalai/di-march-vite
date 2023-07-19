@@ -44,7 +44,7 @@ export const LoginModal = () => {
 	return showModal ? (
 		<StyledModal>
 			<input name="name" placeholder="nickname" onChange={handleChangeInput} />
-			<input name="password" type="password" onChange={handleChangeInput} />
+			{/* <input name="password" type="password" onChange={handleChangeInput} /> */}
 			<button onClick={onLogin}>Log in </button>
 			<button onClick={() => dispatch(handleShowModal())}>close modal</button>
 		</StyledModal>

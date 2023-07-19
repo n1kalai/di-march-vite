@@ -12,6 +12,20 @@ type onClickTypes = {
 
 const accountMenu = [
 	{
+		title: "Home",
+		link: "/",
+		onClick({ navigate }: onClickTypes) {
+			navigate(this.link);
+		},
+	},
+	{
+		title: "Cocktails",
+		link: "/cocktails",
+		onClick({ navigate }: onClickTypes) {
+			navigate(this.link);
+		},
+	},
+	{
 		title: "Account",
 		link: "/account",
 		style: { backgroundColor: "red" },

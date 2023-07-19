@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { Cocktail } from "../../types/cocktail";
 import { Link } from "react-router-dom";
 
-const StyledCard = styled.article<{ isSmall: boolean }>`
+const StyledCard = styled.article<{ isSmall?: boolean }>`
 	display: flex;
 	width: ${({ isSmall }) => (isSmall ? "700px" : "1400px")};
 	margin-bottom: 20px;
@@ -43,16 +43,24 @@ const StyledCard = styled.article<{ isSmall: boolean }>`
 
 type Props = {
 	cocktail: Cocktail;
-	isSmall: boolean;
+	isSmall?: boolean;
 };
-export const CocktailsCard = ({ cocktail, isSmall }: Props) => {
+export const CocktailsCard = ({ cocktail, isSmall = false }: Props) => {
 	return (
 		<StyledCard isSmall={isSmall}>
 			<img src={cocktail.strDrinkThumb} />
 			<div>
 				<h2>{cocktail.strDrink}</h2>
 				<p className="description">{cocktail.strInstructions}</p>
-				<Link to={`/cocktails/${cocktail.idDrink}`}>See more</Link>
+				<Link
+					to={`/cocktails/${cocktail.idDrink}?showPic=${Boolean(
+						Math.floor(Math.random() * (1 - 0 + 1) + 0)
+					)}&showDescription=${Boolean(
+						Math.floor(Math.random() * (1 - 0 + 1) + 0)
+					)}`}
+				>
+					See more
+				</Link>
 			</div>
 		</StyledCard>
 	);

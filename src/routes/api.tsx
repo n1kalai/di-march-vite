@@ -1,7 +1,24 @@
-import { UserAccount } from "../pages/Account";
-import { Cocktails } from "../pages/Cocktails";
-import { SingleCocktailPage } from "../pages/SingleCocktail";
-import { SliderPage } from "../pages/Slider";
+import { lazy } from "react";
+
+const UserAccount = lazy(() =>
+	import("../pages/Account").then((mod) => ({ default: mod.UserAccount }))
+);
+
+const SingleCocktailPage = lazy(() =>
+	import("../pages/SingleCocktail").then((mod) => ({
+		default: mod.SingleCocktailPage,
+	}))
+);
+
+const Cocktails = lazy(() =>
+	import("../pages/Cocktails").then((mod) => ({
+		default: mod.Cocktails,
+	}))
+);
+
+const SliderPage = lazy(() =>
+	import("../pages/Slider").then((mod) => ({ default: mod.SliderPage }))
+);
 
 export const routes = [
 	{
@@ -13,7 +30,7 @@ export const routes = [
 		Element: Cocktails,
 	},
 	{
-		path: "/cocktails/:id",
+		path: "/cocktails/:id", // parameter
 		Element: SingleCocktailPage,
 	},
 ];

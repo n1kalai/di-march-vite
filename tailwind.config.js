@@ -8,6 +8,7 @@ export default {
 			blue: {
 				250: "#1fb6ff",
 				450: "#2196f3",
+				650: "#232f3e",
 			},
 			purple: "#7e5bef",
 			pink: "#ff49db",

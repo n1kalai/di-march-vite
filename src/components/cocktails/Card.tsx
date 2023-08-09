@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const StyledCard = styled.article<{ isSmall?: boolean }>`
 	display: flex;
 	width: ${({ isSmall }) => (isSmall ? "700px" : "1400px")};
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 	border: solid 1px lightgray;
 	border-radius: 24px;
 	transition: box-shadow 0.4s;
@@ -48,10 +48,10 @@ type Props = {
 export const CocktailsCard = ({ cocktail, isSmall = false }: Props) => {
 	return (
 		<StyledCard isSmall={isSmall}>
-			<img src={cocktail.strDrinkThumb} />
+			<img src={cocktail.strDrinkThumb} loading="lazy" />
 			<div>
 				<h2>{cocktail.strDrink}</h2>
-				<p className="description">{cocktail.strInstructions}</p>
+				<p className="description line-clamp-3">{cocktail.strInstructions}</p>
 				<Link
 					to={`/cocktails/${cocktail.idDrink}?showPic=${Boolean(
 						Math.floor(Math.random() * (1 - 0 + 1) + 0)

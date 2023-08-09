@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.cubic:nth-child(odd) {
+	background-color: gray;
+}
+
+.cubic:nth-child(even) {
+	background-color: black;
+}
+
 #app {
 	height: 100%;
 }
@@ -62,7 +70,7 @@ body {
 .shim-red {
 	position: relative;
 	overflow: hidden;
-	background-color: rgba(255, 0, 0, 0.7);
+	background-color: rebeccapurple;
 }
 .shim-red::after {
 	position: absolute;

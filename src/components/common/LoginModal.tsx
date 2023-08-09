@@ -5,10 +5,14 @@ import { handleShowModal } from "../../features/otherSlice";
 import { RootState } from "../../store/store";
 import { handleLogin } from "../../features/userSlice";
 import { useNavigate } from "react-router-dom";
+import { Registration } from "./Registration";
+import { Button } from "@mui/material";
+import BasicTabs from "./Tabs";
 
 const StyledModal = styled.div`
 	width: 400px;
-	height: 400px;
+	min-height: 400px;
+	padding-bottom: 30px;
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
@@ -25,28 +29,12 @@ export const LoginModal = () => {
 	const navigate = useNavigate();
 	const showModal = useSelector((state: RootState) => state.others.showModal);
 
-	const [logIn, setLogIn] = useState({
-		name: "",
-		password: "",
-	});
-
-	const onLogin = () => {
-		dispatch(handleLogin(logIn));
-		dispatch(handleShowModal());
-		navigate("/account");
-	};
-
-	const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setLogIn((prev) => ({ ...prev, [name]: value }));
-	};
-
 	return showModal ? (
 		<StyledModal>
-			<input name="name" placeholder="nickname" onChange={handleChangeInput} />
-			{/* <input name="password" type="password" onChange={handleChangeInput} /> */}
-			<button onClick={onLogin}>Log in </button>
-			<button onClick={() => dispatch(handleShowModal())}>close modal</button>
+			<BasicTabs />
+			<Button color="error" onClick={() => dispatch(handleShowModal())}>
+				close modal
+			</Button>
 		</StyledModal>
 	) : null;
 };

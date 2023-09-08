@@ -1,0 +1,13 @@
+{
+	"translation": {
+		"gela": " Hi",
+		"description": {
+			"part1": "First part"
+		},
+		"sentence": "Senteence,  where {{ name }} will be changed",
+		"inputLabel": "type cocktail name",
+		"chat": {
+			"title": "Let's chat"
+		}
+	}
+}

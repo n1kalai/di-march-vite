@@ -34,6 +34,7 @@ const productsSlice = createSlice({
 
 	extraReducers(builder) {
 		builder.addCase(getRedProducts.fulfilled, (state, action) => {
+			console.log(action.payload);
 			state.isError = false;
 			state.isLoaded = true;
 			state.isLoading = false;

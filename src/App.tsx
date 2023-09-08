@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Suspense, lazy, useState } from "react";
 import { protectedRoutes, routes } from "./routes/api";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
@@ -6,6 +6,7 @@ import { ProtectedRoute } from "./routes/ProtectedRoute";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GlobalStyles, ThemeProvider, createTheme } from "@mui/material";
+import { SBNGlobal } from "./components/SBNGlobal";
 
 const Header = lazy(() =>
 	import("./components/common/Header").then((mod) => ({ default: mod.Header }))
@@ -63,6 +64,18 @@ function App() {
 							{protectedRoutes.map(({ path, Element }) => (
 								<Route key={path} path={path} element={<Element />} />
 							))}
+						</Route>
+
+						<Route
+							path="sbn"
+							element={
+								<>
+									<SBNGlobal />
+								</>
+							}
+						>
+							<Route path="user" element={<p>"user component"</p>} />
+							<Route path="profile" element={<p>"profile component"</p>} />
 						</Route>
 
 						<Route path="*" element={<div>Not Found</div>} />

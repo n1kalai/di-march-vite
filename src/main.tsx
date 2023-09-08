@@ -11,7 +11,8 @@ import App from "./App.tsx";
 
 import "swiper/css";
 import "./App.css";
-import { ThemeProvider, createTheme } from "@mui/material";
+import "./translation/il18.ts";
+
 // import "./index.css";
 
 const queryClient = new QueryClient({

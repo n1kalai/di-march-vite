@@ -1,4 +1,4 @@
-import { Grid, LinearProgress } from "@mui/material";
+import { Grid, LinearProgress, Typography } from "@mui/material";
 import ProductCard from "../ProductCard";
 
 type Props = {
@@ -8,6 +8,8 @@ type Props = {
 
 export const ProductsContainer = ({ isLoading, data }: Props) => {
 	if (isLoading) return <LinearProgress />;
+	if (!data.length)
+		return <Typography component="h2">No products found</Typography>;
 	return (
 		<Grid // 12
 			component="section"

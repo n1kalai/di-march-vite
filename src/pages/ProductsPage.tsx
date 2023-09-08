@@ -11,7 +11,7 @@ const ProductsPage = () => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dispatch(getRedProducts());
+		dispatch(getRedProducts({}));
 	}, []);
 
 	if (!Object.keys(data).length) {

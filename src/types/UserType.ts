@@ -13,5 +13,6 @@ export interface UserType {
 		isLoaded: boolean;
 		isError: boolean;
 		data: Record<string, Product>;
+		amount: number;
 	};
 }

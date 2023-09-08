@@ -4,6 +4,7 @@ import {
 	NavigateFunction,
 	useLocation,
 	NavLink,
+	Link,
 } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -12,10 +13,17 @@ import { handleShowModal } from "../../features/otherSlice";
 import "./header.css";
 import { CategoriesResponse } from "../../types/CategoriesResponse";
 import { getCategories } from "../../service/getCategories";
-import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import {
+	Badge,
+	List,
+	ListItem,
+	ListItemButton,
+	ListItemText,
+} from "@mui/material";
 import { useAppSelector } from "../../types/hooks";
 import { RootState } from "../../store/store";
 import { TheProfile } from "./TheProfile";
+import { useTranslation } from "react-i18next";
 
 type onClickTypes = {
 	navigate: NavigateFunction;
@@ -31,6 +39,10 @@ const accountMenu = [
 		onClick({ navigate }: onClickTypes) {
 			navigate(this.link);
 		},
+	},
+	{
+		title: "Chat",
+		link: "/chat",
 	},
 	{
 		title: "Products",
@@ -95,21 +107,42 @@ const accountMenu = [
 			navigate(this.link);
 		},
 	},
+	{
+		title: "Formik",
+		link: "/formik",
+		onClick({ navigate }: onClickTypes) {
+			navigate(this.link);
+		},
+	},
+	{
+		title: "React hook form",
+		link: "/rhf",
+		onClick({ navigate }: onClickTypes) {
+			navigate(this.link);
+		},
+	},
 ];
 
 export const Header = () => {
 	const [categories, setCategories] = useState<CategoriesResponse[]>([]);
+	const { i18n } = useTranslation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { pathname } = useLocation();
 
 	const user = useAppSelector((state) => state.user);
 
-	useEffect(() => {
-		getCategories().then((res) => {
-			setCategories(res.data);
-		});
-	}, []);
+	// useEffect(() => {
+	// 	getCategories().then((res) => {
+	// 		setCategories(res.data);
+	// 	});
+	// }, []);
+	const preventDefault = (event: React.SyntheticEvent) =>
+		event.preventDefault();
+
+	const handleChangeLanguage = (lng: "ge" | "en") => {
+		i18n.changeLanguage(lng);
+	};
 
 	return (
 		<header>
@@ -131,49 +164,72 @@ export const Header = () => {
 									color: menuItem.link === pathname ? "white" : "black",
 								}}
 							>
-								<NavLink
-									onClick={(e) =>
-										menuItem.onClick({ navigate, event: e, dispatch, user })
-									}
-									to={menuItem.link}
-								>
-									{menuItem.title}
-								</NavLink>
+								{menuItem.link === "/cart" ? (
+									<Badge badgeContent={user.cartItems.amount} color="primary">
+										<NavLink
+											onClick={(e) =>
+												menuItem.onClick &&
+												menuItem.onClick({ navigate, event: e, dispatch, user })
+											}
+											to={menuItem.link}
+										>
+											{menuItem.title}
+										</NavLink>
+									</Badge>
+								) : (
+									<NavLink
+										onClick={(e) =>
+											menuItem.onClick &&
+											menuItem.onClick({ navigate, event: e, dispatch, user })
+										}
+										to={menuItem.link}
+									>
+										{menuItem.title}
+									</NavLink>
+								)}
 							</li>
 						))}
 					</ul>
 				</nav>
 				<TheProfile />
 			</div>
-			<nav>
-				<List
-					sx={{
-						display: "flex",
-						backgroundColor: (theme) => theme.palette.secondary.dark,
-						padding: 0,
-					}}
-				>
-					{categories.map((item) => (
-						<ListItem
-							sx={{ height: "40px", overflowY: "hidden", px: 1, a: { px: 0 } }}
-							key={item.id}
-							disablePadding
-						>
-							<ListItemButton
-								component="a"
-								href={`/category/${item.id}`}
-								sx={{ textAlign: "center" }}
+			<div>
+				<nav>
+					{/* <List
+						sx={{
+							display: "flex",
+							backgroundColor: (theme) => theme.palette.secondary.dark,
+							padding: 0,
+						}}
+						onClick={preventDefault}
+					>
+						{categories.map((item) => (
+							<ListItem
+								sx={{
+									height: "40px",
+									overflowY: "hidden",
+									px: 1,
+									a: { px: 0 },
+								}}
+								key={item.id}
+								disablePadding
 							>
-								<ListItemText
-									sx={{ span: { fontSize: "0.9em", color: "white" } }}
-								>
-									{item.name}{" "}
-								</ListItemText>
-							</ListItemButton>
-						</ListItem>
-					))}
-				</List>
-			</nav>
+								<Link to={`/category/${item.id}`}>
+									<ListItemText
+										sx={{ span: { fontSize: "0.9em", color: "white" } }}
+									>
+										{item.name}{" "}
+									</ListItemText>
+								</Link>
+							</ListItem>
+						))}
+					</List> */}
+				</nav>
+				<ul>
+					<li onClick={() => handleChangeLanguage("en")}>ENG</li>
+					<li onClick={() => handleChangeLanguage("ge")}>GE</li>
+				</ul>
+			</div>
 		</header>
 	);
 };

@@ -29,6 +29,7 @@ import { store } from "../store/store";
 import { getRedProducts } from "../features/productsSlice";
 import { useAppDispatch, useAppSelector } from "../types/hooks";
 import { AsyncThunkAction } from "@reduxjs/toolkit";
+import { useTranslation } from "react-i18next";
 
 const fetchURL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 
@@ -37,6 +38,8 @@ let DEBOUNCE: number;
 const LiveSearch = () => {
 	const [search, setSearch] = useState("");
 	const dispatch = useAppDispatch();
+
+	const { t } = useTranslation();
 
 	const prods = useAppSelector((state) => state.products);
 
@@ -107,16 +110,17 @@ const LiveSearch = () => {
 	return (
 		<Box sx={{ backgroundColor: (theme) => theme.palette.background.default }}>
 			<Typography component="h1" sx={{ fontSize: 24 }}>
-				Search cocktails
+				Search cocktails {t("sentence", { name: "NIKA" })}
 			</Typography>
 
 			<Box component="form">
 				<TextField
 					id="filled-basic"
-					label="type cocktail name"
+					label={t("inputLabel")}
 					variant="outlined"
 					value={search}
 					onChange={handleSearch}
+					size="small"
 					sx={{ width: 600 }}
 					InputProps={{
 						endAdornment: (

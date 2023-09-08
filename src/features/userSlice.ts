@@ -14,6 +14,7 @@ const initialState: UserType = {
 	role: undefined,
 	unique_name: "",
 	cartItems: {
+		amount: 0,
 		isLoading: true,
 		isLoaded: false,
 		isError: false,
@@ -43,6 +44,7 @@ const usersSlice = createSlice({
 		},
 		handleAddProduct(state, action: PayloadAction<Product>) {
 			state.cartItems.data[action.payload.id] = action.payload;
+			state.cartItems.amount += 1;
 		},
 		handleLogout: (state) => {
 			// for (let key in initialState) {
@@ -66,14 +68,19 @@ const usersSlice = createSlice({
 			state.cartItems.isLoading = false;
 			state.cartItems.isError = false;
 			const newObj: any = {};
+			let amount = 0;
 			action.payload.forEach((product) => {
 				newObj[product.id] = product;
+				amount += 1;
 			});
-
+			state.cartItems.amount = amount;
 			state.cartItems.data = newObj;
 		});
-		builder.addCase(removeCartItem.fulfilled, (state, action) => {
-			console.log(action);
+		builder.addCase(removeCartItem.fulfilled, (state, { payload }) => {
+			if (payload) {
+				delete state.cartItems.data[payload];
+				state.cartItems.amount -= 1;
+			}
 		});
 	},
 });

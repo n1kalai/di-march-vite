@@ -34,7 +34,7 @@ export default function MediaCard({ cocktail }: { cocktail: Cocktail }) {
 				</Button>
 				<Button
 					onClick={() => {
-						navigate(`/cocktails/${cocktail.idDrink}`);
+						navigate(`cocktails/${cocktail.idDrink}`);
 					}}
 					variant="contained"
 					size="small"

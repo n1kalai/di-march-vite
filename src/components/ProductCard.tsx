@@ -7,14 +7,15 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { addToCart } from "../service/addToCart";
-import { useDispatch } from "react-redux";
+
 import {
 	handleAddProduct,
 	handleRemoveOptimisticProduct,
 	removeCartItem,
 } from "../features/userSlice";
 import { useAppDispatch, useAppSelector } from "../types/hooks";
-import { AppDispatch } from "../store/store";
+
+import { Box } from "@mui/material";
 
 export default function ProductCard({ products }: { products: Product }) {
 	const navigate = useNavigate();
@@ -67,24 +68,27 @@ export default function ProductCard({ products }: { products: Product }) {
 					{products.description}
 				</Typography>
 			</CardContent>
-			<CardActions>
-				<Button
-					onClick={prod ? handleReemoveFromCart : handleAddToCart}
-					startIcon={<AddShoppingCartIcon />}
-					variant="contained"
-					size="small"
-				>
-					{prod ? "remove" : "add"}
-				</Button>
-				<Button
-					onClick={() => {
-						navigate(`/products/${products.id}`);
-					}}
-					variant="contained"
-					size="small"
-				>
-					Learn More
-				</Button>
+			<CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
+				<Box sx={{ display: "flex", gap: 2 }}>
+					<Button
+						onClick={prod ? handleReemoveFromCart : handleAddToCart}
+						startIcon={<AddShoppingCartIcon />}
+						variant="contained"
+						size="small"
+					>
+						{prod ? "remove" : "add"}
+					</Button>
+					<Button
+						onClick={() => {
+							navigate(`/products/${products.id}`);
+						}}
+						variant="contained"
+						size="small"
+					>
+						View
+					</Button>
+				</Box>
+				<Typography component="span">{products.price}GEL</Typography>
 			</CardActions>
 		</Card>
 	);

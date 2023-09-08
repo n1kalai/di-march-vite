@@ -7,3 +7,33 @@ footer {
 	flex-direction: column;
 	gap: 20px;
 }
+
+.dato-style {
+	display: flex;
+	gap: 30px;
+}
+
+.dato-style li {
+	width: 130px;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.dato-style li:hover {
+	text-decoration: underline;
+}
+
+.dato-style li::first-line {
+	font-weight: bold;
+}
+
+.gela-style {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 60px;
+	width: 1100px;
+}
+
+.gela-style li:first-line {
+	font-weight: bold;
+}

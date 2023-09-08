@@ -1,10 +1,13 @@
 import { lazy } from "react";
 
+const AppFormik = lazy(() => import("../pages/AppFormik"));
+const RHFComponent = lazy(() => import("../pages/RHFComponent"));
 const ProductById = lazy(() => import("../pages/ProductById"));
 const CartPage = lazy(() => import("../pages/CartPage"));
 const LearningCss = lazy(() => import("../pages/LearningCss"));
 const SimpleSlider = lazy(() => import("../pages/SlickSlider"));
 const ProductsPage = lazy(() => import("../pages/ProductsPage"));
+const CategoryPage = lazy(() => import("../pages/CategoryPage"));
 
 const UserAccount = lazy(() =>
 	import("../pages/Account").then((mod) => ({ default: mod.UserAccount }))
@@ -25,6 +28,7 @@ const SliderPage = lazy(() =>
 const MasteringUseTransition = lazy(
 	() => import("../pages/MasteringUseTransition")
 );
+const Chat = lazy(() => import("../pages/Chat"));
 
 export const routes = [
 	{
@@ -36,6 +40,7 @@ export const routes = [
 		Element: SimpleSlider,
 	},
 	{ path: "/products", Element: ProductsPage },
+	{ path: "/category/:id", Element: CategoryPage },
 	{ path: "/products/:id", Element: ProductById },
 
 	{
@@ -43,20 +48,24 @@ export const routes = [
 		Element: SingleCocktailPage,
 	},
 	{
-		path: "/learning-css", // parameter
-		Element: LearningCss,
+		path: "/formik", // parameter
+		Element: AppFormik,
 	},
 	{
-		path: "/use-transition", // parameter
-		Element: MasteringUseTransition,
+		path: "/rhf", // parameter
+		Element: RHFComponent,
 	},
-];
-
-export const protectedRoutes = [
+	{
+		path: "/chat", // parameter
+		Element: Chat,
+	},
 	{
 		path: "/swiper",
 		Element: SliderPage,
 	},
+];
+
+export const protectedRoutes = [
 	{
 		path: "/account",
 		Element: UserAccount,

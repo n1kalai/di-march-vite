@@ -123,20 +123,27 @@ const accountMenu = [
 	},
 ];
 
+const notToshow = {
+	"/products": true,
+	"/chat": true,
+};
+
 export const Header = () => {
 	const [categories, setCategories] = useState<CategoriesResponse[]>([]);
 	const { i18n } = useTranslation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { pathname } = useLocation();
-
+	console.log(useLocation());
 	const user = useAppSelector((state) => state.user);
 
-	// useEffect(() => {
-	// 	getCategories().then((res) => {
-	// 		setCategories(res.data);
-	// 	});
-	// }, []);
+	console.log(pathname);
+
+	useEffect(() => {
+		getCategories().then((res) => {
+			setCategories(res.data);
+		});
+	}, []);
 	const preventDefault = (event: React.SyntheticEvent) =>
 		event.preventDefault();
 
@@ -169,7 +176,12 @@ export const Header = () => {
 										<NavLink
 											onClick={(e) =>
 												menuItem.onClick &&
-												menuItem.onClick({ navigate, event: e, dispatch, user })
+												menuItem.onClick({
+													navigate,
+													event: e,
+													dispatch,
+													user,
+												})
 											}
 											to={menuItem.link}
 										>
@@ -195,7 +207,7 @@ export const Header = () => {
 			</div>
 			<div>
 				<nav>
-					{/* <List
+					<List
 						sx={{
 							display: "flex",
 							backgroundColor: (theme) => theme.palette.secondary.dark,
@@ -223,7 +235,7 @@ export const Header = () => {
 								</Link>
 							</ListItem>
 						))}
-					</List> */}
+					</List>
 				</nav>
 				<ul>
 					<li onClick={() => handleChangeLanguage("en")}>ENG</li>

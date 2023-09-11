@@ -30,6 +30,7 @@ import { getRedProducts } from "../features/productsSlice";
 import { useAppDispatch, useAppSelector } from "../types/hooks";
 import { AsyncThunkAction } from "@reduxjs/toolkit";
 import { useTranslation } from "react-i18next";
+import { CocktailsSkeleton } from "../components/cocktails/Skeleton";
 
 const fetchURL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 
@@ -50,9 +51,7 @@ const LiveSearch = () => {
 	const { data, isError, isLoading, refetch, isFetching } = useQuery(
 		["cocktails", search],
 		() => getCocktails(search),
-		{
-			keepPreviousData: true,
-		}
+		{ keepPreviousData: true }
 	);
 
 	const queryClient = useQueryClient();
@@ -104,7 +103,7 @@ const LiveSearch = () => {
 	}
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <CocktailsSkeleton />;
 	}
 
 	return (

@@ -1,5 +1,7 @@
 import { TextField } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { getCocktails } from "../service/getCocktails";
 
 export default () => {
 	const {
@@ -13,6 +15,15 @@ export default () => {
 			select: "",
 		},
 	});
+
+	const rq = useQuery(["cocktails", ""], () => getCocktails(""), {
+		keepPreviousData: true,
+		refetchOnWindowFocus: true,
+		refetchOnMount: true,
+		refetchOnReconnect: true,
+	});
+
+	console.log("RHF", rq);
 
 	const onSubmit = (data: any) => {
 		console.log(errors);

@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { Cocktail } from "../../types/cocktail";
 import { Link } from "react-router-dom";
 
-const StyledCard = styled.article<{ isSmall?: boolean }>`
+export const StyledCard = styled.article<{ isSmall?: boolean }>`
 	display: flex;
 	width: ${({ isSmall }) => (isSmall ? "700px" : "1400px")};
 	/* margin-bottom: 20px; */
@@ -15,6 +15,11 @@ const StyledCard = styled.article<{ isSmall?: boolean }>`
 	}
 
 	img {
+		width: ${({ isSmall }) => (isSmall ? "220px" : "400px")};
+		border-radius: 24px;
+	}
+
+	.img {
 		width: ${({ isSmall }) => (isSmall ? "220px" : "400px")};
 		border-radius: 24px;
 	}

@@ -30,6 +30,8 @@ const MasteringUseTransition = lazy(
 );
 const Chat = lazy(() => import("../pages/Chat"));
 
+const PRODUCTS = "products";
+
 export const routes = [
 	{
 		path: "/",
@@ -39,9 +41,9 @@ export const routes = [
 		path: "/slick",
 		Element: SimpleSlider,
 	},
-	{ path: "/products", Element: ProductsPage },
+	{ path: `/${PRODUCTS}`, Element: ProductsPage },
 	{ path: "/category/:id", Element: CategoryPage },
-	{ path: "/products/:id", Element: ProductById },
+	{ path: `/${PRODUCTS}/:id`, Element: ProductById },
 
 	{
 		path: "/cocktails/:id", // parameter

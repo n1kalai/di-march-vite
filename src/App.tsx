@@ -1,4 +1,10 @@
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import {
+	BrowserRouter,
+	Outlet,
+	Route,
+	Routes,
+	useLocation,
+} from "react-router-dom";
 import { Suspense, lazy, useState } from "react";
 import { protectedRoutes, routes } from "./routes/api";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
@@ -35,6 +41,7 @@ const themes = {
 
 function App() {
 	const [mode, setMode] = useState("light");
+
 	return (
 		<ThemeProvider theme={themes[mode as keyof typeof themes]}>
 			<GlobalStyles styles={{}} />

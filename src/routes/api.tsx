@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import ReactVirtualized from "../pages/ReactVirtualized";
 
 const AppFormik = lazy(() => import("../pages/AppFormik"));
 const RHFComponent = lazy(() => import("../pages/RHFComponent"));
@@ -8,6 +9,7 @@ const LearningCss = lazy(() => import("../pages/LearningCss"));
 const SimpleSlider = lazy(() => import("../pages/SlickSlider"));
 const ProductsPage = lazy(() => import("../pages/ProductsPage"));
 const CategoryPage = lazy(() => import("../pages/CategoryPage"));
+const MostDemandAndOffers = lazy(() => import("../pages/MostDemandAndOffers"));
 
 const UserAccount = lazy(() =>
 	import("../pages/Account").then((mod) => ({ default: mod.UserAccount }))
@@ -56,6 +58,14 @@ export const routes = [
 	{
 		path: "/rhf", // parameter
 		Element: RHFComponent,
+	},
+	{
+		path: "/MD-OFS", // parameter
+		Element: MostDemandAndOffers,
+	},
+	{
+		path: "/rv", // parameter
+		Element: ReactVirtualized,
 	},
 	{
 		path: "/chat", // parameter

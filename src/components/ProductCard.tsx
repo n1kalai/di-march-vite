@@ -16,6 +16,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../types/hooks";
 
 import { Box } from "@mui/material";
+import { Price } from "./Card/Price";
 
 export default function ProductCard({ products }: { products: Product }) {
 	const navigate = useNavigate();
@@ -47,7 +48,7 @@ export default function ProductCard({ products }: { products: Product }) {
 		<Card sx={{ pb: 2 }}>
 			<CardMedia
 				sx={{ height: 250 }}
-				image={products.images[0]}
+				image={products.image || products.images?.[0]}
 				title="green iguana"
 			/>
 			<CardContent sx={{ position: "relative" }}>
@@ -88,7 +89,11 @@ export default function ProductCard({ products }: { products: Product }) {
 						View
 					</Button>
 				</Box>
-				<Typography component="span">{products.price}GEL</Typography>
+				<Price
+					price={products.price}
+					oldPrice={products.oldPrice}
+					newPrice={products.newPrice}
+				/>
 			</CardActions>
 		</Card>
 	);

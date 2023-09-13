@@ -121,6 +121,20 @@ const accountMenu = [
 			navigate(this.link);
 		},
 	},
+	{
+		title: "MD & OFFS",
+		link: "/MD-OFS",
+		onClick({ navigate }: onClickTypes) {
+			navigate(this.link);
+		},
+	},
+	{
+		title: "React virtualized",
+		link: "/rv",
+		onClick({ navigate }: onClickTypes) {
+			navigate(this.link);
+		},
+	},
 ];
 
 const notToshow = {

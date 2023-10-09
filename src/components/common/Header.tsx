@@ -1,4 +1,4 @@
-import { Dispatch, MouseEvent, useEffect, useState } from "react";
+import { Dispatch, MouseEvent, lazy, useEffect, useState } from "react";
 import {
 	useNavigate,
 	NavigateFunction,
@@ -7,23 +7,19 @@ import {
 	Link,
 } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { handleShowModal } from "../../features/otherSlice";
 
 import "./header.css";
 import { CategoriesResponse } from "../../types/CategoriesResponse";
 import { getCategories } from "../../service/getCategories";
-import {
-	Badge,
-	List,
-	ListItem,
-	ListItemButton,
-	ListItemText,
-} from "@mui/material";
-import { useAppSelector } from "../../types/hooks";
-import { RootState } from "../../store/store";
+import { Badge, List, ListItem, ListItemText } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../types/hooks";
 import { TheProfile } from "./TheProfile";
 import { useTranslation } from "react-i18next";
+import { getReduxCartItems } from "../../features/userSlice";
+import { addData, getThunkCategories } from "../../features/categoriesSlice";
+import { AppDispatch } from "../../store/store";
 
 type onClickTypes = {
 	navigate: NavigateFunction;
@@ -32,10 +28,23 @@ type onClickTypes = {
 	event: MouseEvent<HTMLAnchorElement>;
 };
 
+// function lazyWithPreload(factory) {
+// 	const Component = lazy(factory);
+// 	Component.preload = factory;
+// 	return Component;
+// }
+
 const accountMenu = [
 	{
 		title: "Home",
 		link: "/",
+		onClick({ navigate }: onClickTypes) {
+			navigate(this.link);
+		},
+	},
+	{
+		title: "Pricing",
+		link: "/pricing",
 		onClick({ navigate }: onClickTypes) {
 			navigate(this.link);
 		},
@@ -143,21 +152,22 @@ const notToshow = {
 };
 
 export const Header = () => {
-	const [categories, setCategories] = useState<CategoriesResponse[]>([]);
+	// const [categories, setCategories] = useState<CategoriesResponse[]>([]);
 	const { i18n } = useTranslation();
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
+	const dispatcher = useDispatch<AppDispatch>();
 	const { pathname } = useLocation();
-	console.log(useLocation());
+	const categories = useAppSelector((state) => state.categories);
+
 	const user = useAppSelector((state) => state.user);
 
-	console.log(pathname);
-
 	useEffect(() => {
-		getCategories().then((res) => {
-			setCategories(res.data);
-		});
+		if (!categories.isLoaded) {
+			dispatcher(getThunkCategories()); // redux
+		}
 	}, []);
+
 	const preventDefault = (event: React.SyntheticEvent) =>
 		event.preventDefault();
 
@@ -209,6 +219,12 @@ export const Header = () => {
 											menuItem.onClick({ navigate, event: e, dispatch, user })
 										}
 										to={menuItem.link}
+										// onMouseEnter={() => {
+										// 	const comp = lazyWithPreload(
+										// 		() => import("../../pages/CartPage")
+										// 	);
+										// 	comp.preload();
+										// }}
 									>
 										{menuItem.title}
 									</NavLink>
@@ -229,7 +245,7 @@ export const Header = () => {
 						}}
 						onClick={preventDefault}
 					>
-						{categories.map((item) => (
+						{categories.data.map((item) => (
 							<ListItem
 								sx={{
 									height: "40px",
@@ -251,11 +267,11 @@ export const Header = () => {
 						))}
 					</List>
 				</nav>
-				<ul>
-					<li onClick={() => handleChangeLanguage("en")}>ENG</li>
-					<li onClick={() => handleChangeLanguage("ge")}>GE</li>
-				</ul>
 			</div>
+			<ul>
+				<li onClick={() => handleChangeLanguage("en")}>ENG</li>
+				<li onClick={() => handleChangeLanguage("ge")}>GE</li>
+			</ul>
 		</header>
 	);
 };

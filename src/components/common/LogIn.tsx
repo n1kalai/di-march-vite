@@ -32,7 +32,7 @@ const Login = () => {
 
 			dispatch(handleLogin(decoded));
 			dispatch(handleShowModal());
-			navigate("/account");
+			window.location.href = "/account";
 		}
 	};
 

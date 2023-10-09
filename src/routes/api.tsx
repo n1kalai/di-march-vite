@@ -9,6 +9,7 @@ const LearningCss = lazy(() => import("../pages/LearningCss"));
 const SimpleSlider = lazy(() => import("../pages/SlickSlider"));
 const ProductsPage = lazy(() => import("../pages/ProductsPage"));
 const CategoryPage = lazy(() => import("../pages/CategoryPage"));
+const PricingPage = lazy(() => import("../pages/pricing"));
 const MostDemandAndOffers = lazy(() => import("../pages/MostDemandAndOffers"));
 
 const UserAccount = lazy(() =>
@@ -58,6 +59,10 @@ export const routes = [
 	{
 		path: "/rhf", // parameter
 		Element: RHFComponent,
+	},
+	{
+		path: "/pricing", // parameter
+		Element: PricingPage,
 	},
 	{
 		path: "/MD-OFS", // parameter

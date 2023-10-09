@@ -46,13 +46,9 @@ const usersSlice = createSlice({
 			state.cartItems.data[action.payload.id] = action.payload;
 			state.cartItems.amount += 1;
 		},
-		handleLogout: (state) => {
-			// for (let key in initialState) {
-			// 	state[key] = initialState[key];
-			// }
+		handleLogout: () => {
 			localStorage.removeItem("token");
 			window.location.href = "/";
-			// state.name = "";
 		},
 		handleRemoveOptimisticProduct(state, action) {
 			delete state.cartItems.data[action.payload];

@@ -10,10 +10,14 @@ export default {
 				450: "#2196f3",
 				650: "#232f3e",
 			},
-			purple: "#7e5bef",
-			pink: "#ff49db",
+			purple: { 500: "#7e5bef" },
+			pink: {
+				500: "#ff49db",
+			},
 			orange: "#ff7849",
-			green: "#13ce66",
+			green: {
+				500: "#13ce66",
+			},
 			yellow: "#ffc82c",
 			"gray-dark": "#273444",
 			gray: "#8492a6",

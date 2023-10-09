@@ -21,7 +21,7 @@ export const Registration = () => {
 		e.preventDefault();
 
 		try {
-			await baseAPI.post("api/user/registerUser", userRegistrationInput);
+			await baseAPI.post("/api/user/registerUser", userRegistrationInput);
 			setSuccessMessage(true);
 		} catch (e) {
 			// ....

@@ -33,14 +33,22 @@ const productsSlice = createSlice({
 	reducers: {},
 
 	extraReducers(builder) {
+		builder.addCase(getRedProducts.pending, (state, action) => {
+			console.log(state);
+			console.log(action);
+			state.isLoading = true;
+			state.data = { ...state.data };
+		});
 		builder.addCase(getRedProducts.fulfilled, (state, action) => {
 			state.isError = false;
 			state.isLoaded = true;
 			state.isLoading = false;
 			const myObj: Record<string, Product> = {};
-			action.payload.forEach((prod) => (myObj[prod.id] = prod));
+			console.log("action", action);
+			action.payload.data.forEach((prod) => (myObj[prod.id] = prod));
 			state.data = myObj;
 		});
+
 		builder.addCase(getProductById.fulfilled, (state, { payload }) => {
 			state.data[payload.id] = payload;
 		});
